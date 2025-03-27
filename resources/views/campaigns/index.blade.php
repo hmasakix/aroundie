@@ -94,12 +94,18 @@
     
     <div class="content">
         <div class="header">Campaign一覧</div>
-        
+            @if (session('success'))
+                 <div style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+                     {{ session('success') }}
+                 </div>
+            @endif
+            
         <table>
             <tr>
                 <th>CampaignID</th>
                 <th>タイトル</th>
                 <th>内容</th>
+                <th>送信</th>
                 <th>編集</th>
                 <th>削除</th>
             </tr>
@@ -108,6 +114,12 @@
                 <td>{{ $campaign->id }}</td>
                 <th>{{ $campaign->title }}</th>
                 <td>{{ $campaign->content }}</td>
+                <td>
+                    <form action="{{ route('campaigns.sendmail', ['campaign' => $campaign->id]) }}" method="POST">
+                        @csrf
+                        <button type="submit" onclick="return confirm('本当に送信しますか？');">送信</button>
+                    </form>
+                </td>
                 <td><a href="{{ route('campaigns.edit', ['campaign' => $campaign->id])  }}" >編集</a></td>
                 <td>
                     <form action="{{ route('campaigns.destroy', $campaign->id) }}" method="POST">
@@ -121,7 +133,7 @@
         </table> 
 
         <div class="button-container">
-            <button class="btn btn-send">送信はこちらから</button>
+            <!-- <a href="http://localhost:8025" target="_blank" class="btn btn-send">送信結果はこちら</a> -->
             <a href="{{ route('campaigns.create') }}" class="btn btn-create">新規作成</a>
         </div>
     </div>

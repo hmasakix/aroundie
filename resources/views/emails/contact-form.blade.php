@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>お問い合わせ内容</title>
+    <title>キャンペーンのお知らせ</title>
     <style>
         body {
             font-family: sans-serif;
@@ -22,7 +22,7 @@
 </head>
 <body>
     <div class="container">
-        <h2>お問い合わせ内容</h2>
+        <h2>キャンペーンのお知らせ</h2>
 
         <p><span class="label">お名前:</span><br>
         <span class="value">{{ $data['name'] }}</span></p>
@@ -32,8 +32,11 @@
 
         <p><span class="label">件名:</span><br>
         <span class="value">{{ $data['subject'] }}</span></p>
-
-        <p><span class="label">お問い合わせ内容:</span><br>
+    
+        <p><span class="label">タイトル:</span><br>
+        <span class="value">{{ nl2br(e($data['title'])) }}</span></p>
+        
+        <p><span class="label">キャンペーン内容:</span><br>
         <span class="value">{!! nl2br(e($data['message'])) !!}</span></p>
     </div>
 </body>

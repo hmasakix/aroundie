@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Campaign; 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Campaign; 
+use App\Models\Visitor;
+use App\Mail\TestMail;
 
 class CampaignController extends Controller
 {
@@ -56,6 +60,26 @@ class CampaignController extends Controller
         return redirect()->route('campaigns.index');
     }
     
-
+    public function sendmail(Campaign $campaign)
+    {
+        $visitors = Visitor::all();
+        
+        foreach ($visitors as $visitor) {
+            $data = [
+                'name' => $visitor->name,
+                'email' => $visitor->email,
+                'subject' => 'キャンペーンのお知らせ',
+                'title' => $campaign->title,
+                'message' => $campaign->content,
+                // 'campaign' => $campaign->title,
+                'campaign_id' => $campaign->id,
+                'campaign_content' => $campaign->content,
+                'from' => 'test@example.com',
+            ];
+            Mail::to($visitor->email)->send(new TestMail($data));
+            }
+        return redirect()->route('campaigns.index')->with('success', '送信されました！');
+     
+    }
 }
 

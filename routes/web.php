@@ -13,18 +13,6 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
 
 
-Route::get('/send-test-mail', function () {
-    $data = [
-        'name' => 'テスト太郎',
-        'email' => 'test@example.com',
-        'subject' => 'これはテスト件名です',
-        'message' => "これはテストの本文です。\n改行もOK!"
-    ];
-    Mail::to('test@example.com')->send(new TestMail($data));
-    return 'メール送信完了！';
-});
-
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -35,7 +23,8 @@ Route::post('/campaigns', [CampaignController::class, 'store']);
 Route::get('/campaigns/{campaign}/edit', [CampaignController::class, 'edit'])->name('campaigns.edit');
 Route::get('/campaigns/{campaign}', [CampaignController::class, 'show'])->name('campaigns.show');
 Route::put('/campaigns/{campaign}', [CampaignController::class, 'update'])->name('campaigns.update');
-
+Route::resource('campaigns', CampaignController::class);
+Route::post('/campaigns/{campaign}/sendmail', [CampaignController::class, 'sendmail'])->name('campaigns.sendmail');
 
 Route::get('/dashboards', [DashboardController::class, 'index'])->name('dashboards.index') ;
 
@@ -44,8 +33,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-Route::resource('campaigns', CampaignController::class);
 
 Route::get('/visitors', [VisitorController::class, 'index'])->name('visitors.index');
 
@@ -70,3 +57,17 @@ Route::get('/contact', function () {
 });
 
 // Route::post('/contact', [TestMailController::class, 'store']);
+
+
+Route::get('/send-test-mail', function () {
+    $data = [
+        'name' => 'テスト太郎',
+        'email' => 'test@example.com',
+        'subject' => 'これはテスト件名です',
+        'message' => "これはテストの本文です。\n改行もOK!"
+    ];
+    Mail::to('test@example.com')->send(new TestMail($data));
+    return 'メール送信完了！';
+});
+
+

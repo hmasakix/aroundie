@@ -28,12 +28,12 @@ class RegisterController extends Controller
      *
      * 
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/dashboards';
 
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @retur
      */
     public function __construct()
     {

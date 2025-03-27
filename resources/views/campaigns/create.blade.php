@@ -92,27 +92,30 @@
   
     <div class="content">
       <div class="header">Campaign登録</div>
-      <table>
-        <form action="/campaigns" method="POST">
-        @csrf
-        <div class="mb-3">
-            <label class="form-label">キャンペーン名</label>
-            <input type="text" name="title" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">説明</label>
-            <textarea name="content" class="form-control" required></textarea>
-        </div> 
-        <div class="mb-3">
-            <label class="form-label">開始日</label>
-            <input type="date" name="start_date" class="form-control" required>
-        </div> 
-        <div class="mb-3">
-            <label class="form-label">終了日</label>
-            <input type="date" name="end_date" class="form-control" required>
-        </div>
-      </table>
-        <button type="submit" class="button">登録</button>
-        </form>
+
+      <form action="/campaigns" method="POST">
+          @csrf
+          <table>
+              <tr>
+                  <td><label class="form-label">キャンペーン名</label></td>
+                  <td><input type="text" name="title" class="form-control" required></td>
+              </tr>
+              <tr>
+                  <td><label class="form-label">本文</label></td>
+                  <td><textarea name="content" class="form-control" rows="5" style="width: 100%; min-height: 100px;" required></textarea></td>
+              </tr>
+              <tr>
+                  <td><label class="form-label">開始日</label></td>
+                  <td><input type="date" name="start_date" class="form-control" required></td>
+              </tr>
+              <tr>
+                  <td><label class="form-label">終了日</label></td>
+                  <td><input type="date" name="end_date" class="form-control" required></td>
+              </tr>
+          </table>
+          <div class="button-container">
+              <button type="submit" class="button">登録</button>
+          </div>
+      </form>
     </div>
 </div>

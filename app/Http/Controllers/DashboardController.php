@@ -11,7 +11,7 @@ class DashboardController extends Controller
     public function index()
     {
         $visitors = [];
-        return view('dashboard.index', compact('visitors')); 
+        return view('dashboards.index', compact('visitors')); 
     }
     
     public function create()
@@ -19,4 +19,8 @@ class DashboardController extends Controller
         return view('campaigns.create');
     }
     
+    protected function redirectTo()
+    {
+        return '/dashboards'; // ← 複数形に変更
+    }
 }
