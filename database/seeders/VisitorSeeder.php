@@ -14,5 +14,9 @@ class VisitorSeeder extends Seeder
     public function run(): void
     {
         Visitor::factory()->count(50)->create();
+        Visitor::create([
+            'name' => '検証用',
+            'email' => 'gotoshigeki@gsacademy.jp',
+        ]);
     }
 }
