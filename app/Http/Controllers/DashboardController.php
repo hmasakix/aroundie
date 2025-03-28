@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Campaign; 
+use App\Models\Visitor;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $visitors = [];
-        return view('dashboards.index', compact('visitors')); 
+        $visitorCount = Visitor::count();   // ← 訪問者の人数カウント
+        $campaignCount = Campaign::count(); 
+        return view('dashboards.index', compact('visitorCount', 'campaignCount'));
     }
+
     
     public function create()
     {
@@ -21,6 +24,6 @@ class DashboardController extends Controller
     
     protected function redirectTo()
     {
-        return '/dashboards'; // ← 複数形に変更
+        return '/dashboards'; 
     }
 }

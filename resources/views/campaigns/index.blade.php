@@ -74,15 +74,15 @@
 
 <div class="container">
     <div class="sidebar">
-        <div><strong>ロゴ</strong></div>
-        <a href="#">ダッシュボード</a>
-        <div>メルマガ一覧</div>
+    <div><strong>AROUNDIE</strong></div>
+        <a href="{{ route('dashboards.index') }}" >ダッシュボード</a>
+        <!-- <div>メルマガ一覧</div>
         <a href="#">・メルマガ新規作成</a>
-        <a href="#">・メルガマ実績確認</a>
+        <a href="#">・メルガマ実績確認</a> -->
         <a href="{{ route('visitors.index') }}" class=>来訪者一覧</a>
-        <a href="#">・来訪者編集</a>
+        <!-- <a href="#">・来訪者編集</a> -->
         <a href="{{ route('campaigns.index') }}" class=>Campaign一覧</a>
-        <a href="{{ route('campaigns.create') }}" class=>・Campaign登録</a>
+        <a href="{{ route('campaigns.create') }}" class=>Campaign登録</a>
         <a href="{{ route('logout') }}"
            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
              ログアウト
@@ -90,7 +90,7 @@
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                  @csrf
             </form>
-         </div>
+        </div>
     
     <div class="content">
         <div class="header">Campaign一覧</div>
@@ -101,6 +101,14 @@
             @endif
             
         <table>
+            <colgroup>
+                <col style="width: 30px;">  
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+            </colgroup>
             <tr>
                 <th>CampaignID</th>
                 <th>タイトル</th>

@@ -14,7 +14,7 @@
             display: flex;
         }
         .sidebar {
-            width: 200px;
+            width: 120px;
             background-color: #f8f9fa;
             padding: 20px;
             height: 100vh;
@@ -76,15 +76,15 @@
 
 <div class="container">
     <div class="sidebar">
-        <div><strong>ロゴ</strong></div>
+        <div><strong>AROUNDIE</strong></div>
         <a href="{{ route('dashboards.index') }}" >ダッシュボード</a>
-        <div>メルマガ一覧</div>
+        <!-- <div>メルマガ一覧</div>
         <a href="#">・メルマガ新規作成</a>
-        <a href="#">・メルガマ実績確認</a>
+        <a href="#">・メルガマ実績確認</a> -->
         <a href="{{ route('visitors.index') }}" class=>来訪者一覧</a>
-        <a href="#">・来訪者編集</a>
+        <!-- <a href="#">・来訪者編集</a> -->
         <a href="{{ route('campaigns.index') }}" class=>Campaign一覧</a>
-        <a href="{{ route('campaigns.create') }}" class=>・Campaign登録</a>
+        <a href="{{ route('campaigns.create') }}" class=>Campaign登録</a>
         <a href="{{ route('logout') }}"
            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
            ログアウト
@@ -95,24 +95,31 @@
     </div>
     
     <div class="content">
-        <div class="header">ダッシュボード</div>
-        <table>
+    <div class="header">ダッシュボード</div>
+
+    <table style="margin-top: 20px; width: 240px; table-layout: fixed; border-collapse: collapse; background-color: #ffffff;">
+        <colgroup>
+            <col style="width: 150px;">
+            <col style="width: 120px;">
+        </colgroup>
+        <thead>
             <tr>
-                <th>ID</th>
-                <th>名前</th>
-                <th>メールアドレス</th>
-                <th>登録日</th>
+                <th style="padding: 10px; text-align: left; background-color: #f2f2f2;"></th>
+                <th style="padding: 10px; text-align: right; background-color: #f2f2f2;">件数</th>
             </tr>
-            @foreach($visitors as $visitor)
-                <tr>
-                    <td>{{ $visitor->id }}</td>
-                    <td>{{ $visitor->name }}</td>
-                    <td>{{ $visitor->email }}</td>
-                    <td>{{ $visitor->created_at }}</td>
-                </tr>
-            @endforeach
-        </table>
-    </div>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 10px;">来訪者リスト数</td>
+                <td style="padding: 10px; text-align: right; font-weight: bold;">{{ $visitorCount }} 件</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; color: #007bff;">Campaign登録数</td>
+                <td style="padding: 10px; text-align: right; color: #007bff; font-weight: bold;">{{ $campaignCount }} 件</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 </body>
 </html> 

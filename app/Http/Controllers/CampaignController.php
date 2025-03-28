@@ -47,11 +47,12 @@ class CampaignController extends Controller
     {
       $request->validate([
         'title' => 'required|max:255',
+        'content' => 'required|string',
       ]);
   
-      $campaign->update($request->only('campaign'));
+      $campaign->update($request->only(['title', 'content']));
   
-      return redirect()->route('campaigns.show', $campaign);
+      return redirect()->route('campaigns.show', $campaign)->with('success', '更新されました！');
     }
 
     public function destroy(Campaign $campaign)

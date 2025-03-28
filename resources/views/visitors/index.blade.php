@@ -14,7 +14,7 @@
             display: flex;
         }
         .sidebar {
-            width: 200px;
+            width: 120px;
             background-color: #f8f9fa;
             padding: 20px;
             height: 100vh;
@@ -76,15 +76,15 @@
 
 <div class="container">
     <div class="sidebar">
-        <div><strong>ロゴ</strong></div>
-        <a href="{{ route('dashboards.index') }}">ダッシュボード</a>
-        <div>メルマガ一覧</div>
+      <div><strong>AROUNDIE</strong></div>
+        <a href="{{ route('dashboards.index') }}" >ダッシュボード</a>
+        <!-- <div>メルマガ一覧</div>
         <a href="#">・メルマガ新規作成</a>
-        <a href="#">・メルガマ実績確認</a>
+        <a href="#">・メルガマ実績確認</a> -->
         <a href="{{ route('visitors.index') }}" class=>来訪者一覧</a>
-        <a href="#">・来訪者編集</a>
+        <!-- <a href="#">・来訪者編集</a> -->
         <a href="{{ route('campaigns.index') }}" class=>Campaign一覧</a>
-        <a href="{{ route('campaigns.create') }}" class=>・Campaign登録</a>
+        <a href="{{ route('campaigns.create') }}" class=>Campaign登録</a>
         <a href="{{ route('logout') }}"
            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
            ログアウト
@@ -92,7 +92,7 @@
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                  @csrf
             </form>
-    </div>
+      </div>
     
     <div class="content">
         <div class="header">来訪者一覧</div>

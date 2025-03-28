@@ -14,7 +14,7 @@
             display: flex;
         }
         .sidebar {
-            width: 200px;
+            width: 120px;
             background-color: #f8f9fa;
             padding: 20px;
             height: 100vh;
@@ -65,6 +65,7 @@
         }
         .form-group {
             margin-bottom: 15px;
+            font-size: 20px;
         }
         label {
             font-weight: bold;
@@ -87,15 +88,15 @@
 
     <div class="container">
         <div class="sidebar">
-            <div><strong>ロゴ</strong></div>
-            <a href="#">ダッシュボード</a>
-            <div>メルマガ一覧</div>
+            <div><strong>AROUNDIE</strong></div>
+            <a href="{{ route('dashboards.index') }}" >ダッシュボード</a>
+            <!-- <div>メルマガ一覧</div>
             <a href="#">・メルマガ新規作成</a>
-            <a href="#">・メルガマ実績確認</a>
+            <a href="#">・メルガマ実績確認</a> -->
             <a href="{{ route('visitors.index') }}" class=>来訪者一覧</a>
-            <a href="#">・来訪者編集</a>
+            <!-- <a href="#">・来訪者編集</a> -->
             <a href="{{ route('campaigns.index') }}" class=>Campaign一覧</a>
-            <a href="{{ route('campaigns.create') }}" class=>・Campaign登録</a>
+            <a href="{{ route('campaigns.create') }}" class=>Campaign登録</a>
             <a href="{{ route('logout') }}"
                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 ログアウト
@@ -108,7 +109,7 @@
         <div class="content">
             <div class="header">Campaign編集</div>
 
-            <form method="POST" action="{{ route('campaigns.update', $campaign) }}">
+            <form method="POST" action="{{ route('campaigns.update', $campaign->id) }}">
                 @csrf
                 @method('PUT')
 
