@@ -4,6 +4,8 @@
     </IfModule>
 
     RewriteEngine On
+    RewriteBase /aroundie/
+
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
