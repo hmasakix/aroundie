@@ -7,7 +7,6 @@ use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\TestMail;
 
 // トップアクセス時はログインページへリダイレクト
 Route::get('/', function () {
@@ -43,13 +42,3 @@ Route::get('/home', fn() => redirect('/dashboards'));
 
 Route::get('/contact', fn() => view('contact'));
 
-Route::get('/send-test-mail', function () {
-    $data = [
-        'name' => 'テスト太郎',
-        'email' => 'test@example.com',
-        'subject' => 'これはテスト件名です',
-        'message' => "これはテストの本文です。\n改行もOK!"
-    ];
-    Mail::to('test@example.com')->send(new TestMail($data));
-    return 'メール送信完了！';
-});
