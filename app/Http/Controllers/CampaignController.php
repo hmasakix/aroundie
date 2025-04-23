@@ -75,6 +75,7 @@ class CampaignController extends Controller
         // foreach ($visitors as $visitor) {
             $data = [
                 'email' => $testEmail, // ← ここ！
+                'name' => $visitorName, // ← これを追加！
                 // 'name' => $visitor->name,
                 // 'email' => $visitor->email,
                 'subject' => 'キャンペーンのお知らせ',
