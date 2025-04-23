@@ -85,6 +85,9 @@ class CampaignController extends Controller
                 'campaign_id' => $campaign->id,
                 'campaign_content' => $campaign->content,
             ];
+            // 🔍 ここでログ出力を追加（検証ポイント）
+             Log::debug('送信データ確認', $data);
+
             try {
                 Mail::to($testEmail)->send(new TestMail($data));
                 Log::info('テストメール送信試行完了: ' . $testEmail);
