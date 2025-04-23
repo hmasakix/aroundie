@@ -9,10 +9,11 @@ use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
 
-// トップ
+// トップアクセス時はログインページへリダイレクト
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login'); // ★変更点: loginルートへリダイレクト
 });
+
 
 // Campaignルート（明示的にすべて定義）
 Route::get('/campaigns', [CampaignController::class, 'index'])->name('campaigns.index');
