@@ -20,12 +20,14 @@ class TestMail extends Mailable
 
     public function build()
     {
-        $email = $this->data['email'] ?? 'no-reply@aroundie.sakura.ne.jp'; // ← フォールバック
+         \Log::debug('TestMail@build data:', $this->data);
+
+        $email = $this->data['email'] ?? 'no-reply@aroundie.sakura.ne.jp';
         $subject = $this->data['subject'] ?? '（件名なし）';
 
         return $this->from($email)
-                    ->subject($subject)
-                    ->view('emails.contact-form')
-                    ->with(['data' => $this->data]);
+                ->subject($subject)
+                ->text('emails.plain-test') // ← プレーンテキストビュー
+                ->with(['data' => $this->data]);
     }
 }

@@ -22,6 +22,16 @@
 </head>
 <body>
     <div class="container">
+
+    {{-- 🔍 デバッグ用：生データを冒頭に表示 --}}
+        <pre>
+メールテスト送信
+
+名前: {{ $data['name'] ?? '名無し' }}
+件名: {{ $data['subject'] ?? 'なし' }}
+メッセージ: {{ $data['message'] ?? 'なし' }}
+        </pre>
+        
         <h2>キャンペーンのお知らせ</h2>
 
         <p><span class="label">お名前:</span><br>
