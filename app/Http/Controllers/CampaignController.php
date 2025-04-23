@@ -67,23 +67,33 @@ class CampaignController extends Controller
     {
         Log::info('CampaignController@sendmail が実行されました。キャンペーンID: ' . $campaign->id);
         
-        $visitors = Visitor::all();
+        $testEmail = 'hmasakix@gmail.com'; // ★ 自分のアドレスなど
+        $visitorName = 'テスト受信者';
         
-        foreach ($visitors as $visitor) {
+        // $visitors = Visitor::all();
+        
+        // foreach ($visitors as $visitor) {
             $data = [
-                'name' => $visitor->name,
-                'email' => $visitor->email,
+                // 'name' => $visitor->name,
+                // 'email' => $visitor->email,
                 'subject' => 'キャンペーンのお知らせ',
                 'title' => $campaign->title,
                 'message' => $campaign->content,
                 // 'campaign' => $campaign->title,
                 'campaign_id' => $campaign->id,
                 'campaign_content' => $campaign->content,
-                // 'from' => 'test@example.com',
             ];
-            Mail::to($visitor->email)->send(new TestMail($data));
+            try {
+                Mail::to($testEmail)->send(new TestMail($data));
+                Log::info('テストメール送信試行完了: ' . $testEmail);
+            } catch (\Exception $e) {
+                Log::error('メール送信中にエラー発生: ' . $e->getMessage());
             }
-        return redirect()->route('campaigns.index')->with('success', '送信されました！');
+        
+            return redirect()->route('campaigns.index')->with('success', 'テスト送信処理を実行しました！');
+        //     Mail::to($visitor->email)->send(new TestMail($data));
+        //     }
+        // return redirect()->route('campaigns.index')->with('success', '送信されました！');
      
     }
 }
