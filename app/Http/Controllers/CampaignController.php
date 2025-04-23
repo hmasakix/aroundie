@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\Campaign; 
 use App\Models\Visitor;
 use App\Mail\TestMail;
+// Logファサードを追加
+use Illuminate\Support\Facades\Log;
 
 class CampaignController extends Controller
 {
@@ -58,11 +60,13 @@ class CampaignController extends Controller
     public function destroy(Campaign $campaign)
     {
         $campaign->delete();
-        return redirect()->route('campaigns.index');
+         return redirect()->route('campaigns.index')->with('success', '削除されました！');
     }
     
     public function sendmail(Campaign $campaign)
     {
+        Log::info('CampaignController@sendmail が実行されました。キャンペーンID: ' . $campaign->id);
+        
         $visitors = Visitor::all();
         
         foreach ($visitors as $visitor) {
@@ -75,7 +79,7 @@ class CampaignController extends Controller
                 // 'campaign' => $campaign->title,
                 'campaign_id' => $campaign->id,
                 'campaign_content' => $campaign->content,
-                'from' => 'test@example.com',
+                // 'from' => 'test@example.com',
             ];
             Mail::to($visitor->email)->send(new TestMail($data));
             }
