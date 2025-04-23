@@ -20,8 +20,11 @@ class TestMail extends Mailable
 
     public function build()
     {
-        return $this->from($this->data['email'])
-                    ->subject($this->data['subject'])
+        $email = $this->data['email'] ?? 'no-reply@aroundie.sakura.ne.jp'; // ← フォールバック
+        $subject = $this->data['subject'] ?? '（件名なし）';
+
+        return $this->from($email)
+                    ->subject($subject)
                     ->view('emails.contact-form')
                     ->with(['data' => $this->data]);
     }
