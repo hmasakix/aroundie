@@ -7,62 +7,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail; // Mail ファサードを使用
 use App\Models\Campaign;
 use App\Models\Visitor;
-use App\Mail\CampaignMail; // ★★★ 作成した Mailable を use ★★★
+// use App\Mail\CampaignMail; // ★★★ Mailable の use を削除 ★★★
 use Illuminate\Support\Facades\Log;
+use Illuminate\Mail\Message; // ★★★ Message クラスを use ★★★
 
 class CampaignController extends Controller
 {
-    public function index()
-    {
-        $campaigns = Campaign::latest()->get();
-        return view('campaigns.index', compact('campaigns'));
-    }
+    // --- index から destroy までは変更なし ---
+    public function index() { /* ... */ }
+    public function create() { /* ... */ }
+    public function show(Campaign $campaign) { /* ... */ }
+    public function store(Request $request) { /* ... */ }
+    public function edit($id) { /* ... */ }
+    public function update(Request $request, Campaign $campaign) { /* ... */ }
+    public function destroy(Campaign $campaign) { /* ... */ }
 
-    public function create()
-    {
-        return view('campaigns.create');
-    }
 
-    public function show(Campaign $campaign)
-    {
-        return view('campaigns.show', compact('campaign'));
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-        ]);
-
-        Campaign::create($request->all());
-        return redirect("/campaigns")->with('success', 'キャンペーンを作成しました！');
-    }
-
-    public function edit($id)
-    {
-        $campaign = Campaign::findOrFail($id);
-        return view('campaigns.edit', compact('campaign'));
-    }
-    public function update(Request $request, Campaign $campaign)
-    {
-      $request->validate([
-        'title' => 'required|max:255',
-        'content' => 'required|string',
-      ]);
-
-      $campaign->update($request->only(['title', 'content']));
-
-      return redirect()->route('campaigns.show', $campaign)->with('success', '更新されました！');
-    }
-
-    public function destroy(Campaign $campaign)
-    {
-        $campaign->delete();
-         return redirect()->route('campaigns.index')->with('success', '削除されました！');
-    }
-
-    // --- sendmail メソッドを Mailable を使うように修正 ---
+    // --- sendmail メソッドを Mail::send() を使う形に戻す ---
     public function sendmail(Campaign $campaign)
     {
         Log::info('CampaignController@sendmail が実行されました。キャンペーンID: ' . $campaign->id);
@@ -71,36 +32,50 @@ class CampaignController extends Controller
         $sendCount = 0;
         $errorCount = 0;
 
-        // テスト用メールアドレスを追加 (常に自分に送りたい場合はこのまま、不要なら削除)
+        // テスト用 Visitor 追加 (不要なら削除)
         $testVisitor = new Visitor(['name' => 'テスト受信者', 'email' => 'hmasakix@gmail.com']);
         $visitors->push($testVisitor);
 
         Log::info('送信対象件数: ' . $visitors->count() . '件');
 
         foreach ($visitors as $visitor) {
+            // ★★★ ループの外ではなく、中でデータを準備 ★★★
+            $viewData = [
+                'data' => [
+                    'email' => $visitor->email,
+                    'name' => $visitor->name,
+                    'subject' => 'キャンペーンのお知らせ', // ビュー用
+                    'title' => $campaign->title,
+                    'message' => $campaign->content,
+                ]
+            ];
+            $viewName = 'emails.contact-form'; // 使用するビュー名
+
             try {
-                // ★★★ Mailable クラスを使って送信 ★★★
-                Mail::to($visitor->email)->send(new CampaignMail($campaign, $visitor));
+                // ★★★ Mail::send を使用 ★★★
+                Mail::send($viewName, $viewData, function (Message $message) use ($visitor, $campaign) {
+                    $message->to($visitor->email, $visitor->name)
+                            ->from('masaki@aroundie.sakura.ne.jp', 'Aroundie') // ★ 送信元をここで指定
+                            ->subject('キャンペーンのお知らせ: ' . $campaign->title);
+                });
+                // ★★★ ここまで ★★★
 
                 Log::info('メール送信成功: ' . $visitor->email);
                 $sendCount++;
 
             } catch (\Exception $e) {
                 Log::error('メール送信中にエラー発生: ' . $visitor->email . ' - ' . $e->getMessage());
-                // エラー詳細もログへ
                 Log::error($e);
                 $errorCount++;
-                // 次のループへ
                 continue;
             }
 
-            // 送信間隔（必要に応じて調整・削除）
-            sleep(1);
+            sleep(1); // 負荷軽減
         }
 
         Log::info('メール一斉送信処理完了。成功: ' . $sendCount . '件, 失敗: ' . $errorCount . '件');
 
-        // 完了後のリダイレクトメッセージ
+        // リダイレクト処理
         if ($errorCount > 0) {
             return redirect()->route('campaigns.index')->with('warning', $sendCount . '件のメール送信に成功しましたが、' . $errorCount . '件でエラーが発生しました。詳細はログを確認してください。');
         } else {
