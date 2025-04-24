@@ -12,7 +12,8 @@ class VisitorSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-    {
+    {   
+        Visitor::truncate(); 
         Visitor::factory()->count(50)->create();
         Visitor::create([
             'name' => '検証用',
