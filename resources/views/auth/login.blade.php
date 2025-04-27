@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ログイン画面</title>
+    <title>Aroundieログイン画面</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,6 +22,12 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
             width: 300px;
+        }
+        .app-title {
+            font-size: 20px; 
+            font-weight: bold;
+            color: #4682B4; /* 少し落ち着いた青色 (SteelBlue) */
+            margin-bottom: 15px; /* 下の見出しとの間隔 */
         }
         .login-container h1 {
             font-size: 24px;
@@ -77,6 +83,8 @@
 <body>
 
 <div class="login-container">
+    <div class="app-title">Aroundie</div>
+
     <h1>ログイン画面</h1>
     <form method="POST" action="{{ route('login') }}">
         @csrf
