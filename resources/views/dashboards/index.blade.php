@@ -76,7 +76,7 @@
 
 <div class="container">
     <div class="sidebar">
-        <div><strong>AROUNDIE</strong></div>
+        <div><strong>Aroundie</strong></div>
         <a href="{{ route('dashboards.index') }}" >ダッシュボード</a>
         <!-- <div>メルマガ一覧</div>
         <a href="#">・メルマガ新規作成</a>

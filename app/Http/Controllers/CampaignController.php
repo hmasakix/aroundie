@@ -150,13 +150,13 @@ use Illuminate\Mail\Message; // ★★★ Message クラスを use ★★★
         $sendCount = 0;
         $errorCount = 0;
 
-        // テスト用 Visitor 追加 
-        $testVisitor = new Visitor(['name' => 'テスト受信者', 'email' => 'root@taroosg.dev']);
-        $visitors->push($testVisitor);
+        // // テスト用 Visitor 追加 
+        // $testVisitor = new Visitor(['name' => 'テスト受信者', 'email' => 'root@taroosg.dev']);
+        // $visitors->push($testVisitor);
 
-        // テスト用 Visitor2 追加 
-        $testVisitor2 = new Visitor(['name' => 'テスト受信者', 'email' => 'hmasakix@gmail.com']);
-        $visitors->push($testVisitor2);
+        // // テスト用 Visitor2 追加 
+        // $testVisitor2 = new Visitor(['name' => 'テスト受信者', 'email' => 'hmasakix@gmail.com']);
+        // $visitors->push($testVisitor2);
 
         Log::info('送信対象件数: ' . $visitors->count() . '件');
 

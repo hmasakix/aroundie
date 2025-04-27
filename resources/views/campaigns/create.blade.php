@@ -93,7 +93,7 @@
 <div class="container">
     <!-- サイドバー -->
     <div class="sidebar">
-        <div><strong>AROUNDIE</strong></div>
+        <div><strong>Aroundie</strong></div>
         <a href="{{ route('dashboards.index') }}">ダッシュボード</a>
         <a href="{{ route('visitors.index') }}">来訪者一覧</a>
         <a href="{{ route('campaigns.index') }}">Campaign一覧</a>
