@@ -109,12 +109,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td style="padding: 10px;">来訪者リスト数</td>
+            <tr> 
+                <td style="padding: 10px;"><a href="{{ route('visitors.index') }}">来訪者リスト数</a></td>
                 <td style="padding: 10px; text-align: right; font-weight: bold;">{{ $visitorCount }} 件</td>
             </tr>
             <tr>
-                <td style="padding: 10px; color: #007bff;">Campaign登録数</td>
+                <td style="padding: 10px; color: #007bff;"><a href="{{ route('campaigns.index') }}" style="color: inherit;">Campaign登録数</a></td>
                 <td style="padding: 10px; text-align: right; color: #007bff; font-weight: bold;">{{ $campaignCount }} 件</td>
             </tr>
         </tbody>
